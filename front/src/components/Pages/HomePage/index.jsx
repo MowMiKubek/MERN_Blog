@@ -32,23 +32,19 @@ const postData = [
 
 const PostList = (props) => {
     return (
-        <div className="container px-4 px-lg-5">
-            <div className="row gx-4 gx-lg-5 justify-content-center">
-                <div className="col-md-10 col-lg-8 col-xl-7">
-                    {
-                        postData.map(post => (
-                            <div key={post.id}>
-                            <PostItem 
-                                title={post.title}
-                                subtitle={post.subtitle}
-                                author={post.author}
-                                date={post.date}/>
-                            <hr class="my-4" />
-                            </div>
-                        ))
-                    }
+        <div>
+        {
+            postData.map(post => (
+                <div key={post.id}>
+                <PostItem 
+                    title={post.title}
+                    subtitle={post.subtitle}
+                    author={post.author}
+                    date={post.date}/>
+                <hr class="my-4" />
                 </div>
-            </div>
+            ))
+        }
         </div>
     )
 }
