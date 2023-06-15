@@ -4,6 +4,7 @@ import HomePage from './components/Pages/HomePage'
 import AboutPage from './components/Pages/AboutPage'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import PostPage from "./components/Pages/PostPage"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/about" element={<AboutPage />}/>
+        <Route path="/posts/:postid" element={<PostPage />}/>
         <Route exact path="/" element={<HomePage />}/>
       </Route>
       <Route element={<ErrorLayout />}>

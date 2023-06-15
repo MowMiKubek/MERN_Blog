@@ -2,27 +2,27 @@ import PostItem from "./PostItem"
 
 const postData = [
     {
-        id: 1,
+        id: 'rekord',
         title: 'Polak pobił rekord świata',
         subtitle: 'Po 12 latach rekord świata wraca do Polski!',
         author: 'Jakub Tkaczyk',
         date: '8 czerwca 2022'
     },
     {
-        id: 2,
+        id: 'metody',
         title: 'Metody układania kostki Rubika',
         author: 'Jakub Tkaczyk',
         date: '10 marca 2022'
     },
     {
-        id: 3,
+        id: 'slownik',
         title: 'Słowniczek speedcubera',
         subtitle: '"Kilka" trudniejszych słów używanych przez speedcuberów ;)',
         author: 'Jakub Tkaczyk',
         date: '8 marca 2022'
     },
     {
-        id: 4,
+        id: 'historia',
         title: 'Krótka historia speedcubingu',
         subtitle: 'Czyli od czego to wszystko się zaczęło...',
         author: 'Jakub Tkaczyk',
@@ -37,10 +37,7 @@ const PostList = (props) => {
             postData.map(post => (
                 <div key={post.id}>
                 <PostItem 
-                    title={post.title}
-                    subtitle={post.subtitle}
-                    author={post.author}
-                    date={post.date}/>
+                    {...post}/>
                 <hr class="my-4" />
                 </div>
             ))

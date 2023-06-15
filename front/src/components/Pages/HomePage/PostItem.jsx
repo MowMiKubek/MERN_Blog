@@ -1,10 +1,13 @@
+import { NavLink } from 'react-router-dom'
+
+//* There is interesting bug, if you type postID manually it doesn't render header image
 const PostItem = (props) => {
     return (
         <div className="post-preview">
-            <a href="posty/rekord.html">
+            <NavLink to={`/posts/${props.id}`} >
                 <h2 className="post-title">{ props.title }</h2>
                 <h3 className="post-subtitle">{ props.subtitle }</h3>
-            </a>
+            </NavLink>
             <p className="post-meta">
                 Zamieszczone przez &nbsp;
                 <b>{ props.author }</b>&nbsp;
