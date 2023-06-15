@@ -11,12 +11,10 @@ const Navbar = (props) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ms-auto py-4 py-lg-0">
-                        {/* <li className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Główna</a></li>
-                        <li className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4" href="about.html">O mnie</a></li>
-                        <li className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Kontakt</a></li>
-                        <li className="nav-item"><a className="nav-link px-lg-3 py-3 py-lg-4" href="timer.html">Timer</a></li> */}
                         <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/">Główna</NavLink></li>
                         <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/about">O mnie</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/contact">Kontakt</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/timer">Timer</NavLink></li>
                     </ul>
                 </div>
             </div>
