@@ -37,12 +37,18 @@ class PostController{
 
     
     createPost = async (req, res) => {
+        const { _id, accountType } = req.user
+        if(accountType !== 'admin' && accountType !== 'moderator')
+        {
+            res.status(403).send({ error: "Nie posiadasz odpowiednich uprawnien" })
+            return;
+        }
         // walidacja tokena
         const postData = new Post({
             title: req.body.title,
             subtitle: req.body.subtitle,
             content: req.body.content,
-            author: req.body.user._id,
+            author: _id,
         });
         try{
             const savedPost = await postData.save();
@@ -50,7 +56,7 @@ class PostController{
         }
         catch(err){
             console.log(err);
-            res.status(500).send({ message: "Coś poszło nie tak"})
+            res.status(400).send({ error: "Nie udało się dodać postu"})
         }
     }
 
@@ -59,7 +65,7 @@ class PostController{
         const {postID} = req.params;
         if(postID === undefined || postID === null)
         {
-            return res.status(400).json({message: "Post ID is required"});
+            return res.status(400).json({error: "PostID jest wymagane"});
         }
         console.log(req.session.user);
         const newComment = Comment({
@@ -69,7 +75,7 @@ class PostController{
         try {
             const post = await Post.findById(postID);
             if(!post)
-                throw {message: "Post not found"};
+                throw {error: "Post not found"};
             await newComment.save();
             const commentID = newComment._id;
             post.comments.push(commentID);
@@ -78,7 +84,7 @@ class PostController{
         }
         catch(err) {
             console.log(err);
-            res.status(500).send({ message: "Coś poszło nie tak"})
+            res.status(500).send({ error: "Coś poszło nie tak"})
         }
     }
 }

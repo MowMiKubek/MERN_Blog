@@ -14,6 +14,4 @@ const connectDB = async () => {
         }
 }
 
-connectDB();
-
-export default Post;
+export default connectDB;

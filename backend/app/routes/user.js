@@ -14,22 +14,6 @@ router.post('/adminpanel', validateToken, userController.changeRole)
 router.post('/login/', userController.login)
 router.post('/', userController.register)
 
-// router.post('/register', userController.register);
-// router.post('/login', userController.login);
-
-// router.post('/edit', userController.profileEdit);
-
-// router.post('/password', userController.password);
-
-// router.post('/delete', userController.delete);
-
-// router.get('/logout', userController.logout);
-
-// router.get('/adminPanel', userController.adminPanelShow);
-// // router.post('/adminPanel', userController.adminPanel);
-// router.get('/roleuser/:userID', userController.roleUser);
-// router.get('/rolemoder/:userID', userController.roleModerator);
-// router.get('/roleadmin/:userID', userController.roleAdmin);
 
 // router.get('/renewapi', userController.renewApiToken);
 export default router;
