@@ -21,7 +21,7 @@ class UserController {
             res.json({token: token})
         }catch(err){
             console.log(err);
-            res.status(400).json({ errros: err.error })
+            res.status(400).json({ errors: err.error })
         }
     }
 
@@ -64,7 +64,7 @@ class UserController {
         catch(err)
         {
             console.log(err);
-            res.status(400).json({ errros: err.errors })
+            res.status(400).json({ errors: err.errors })
         }
     }
 
@@ -84,7 +84,7 @@ class UserController {
         catch(err)
         {
             console.log(err);
-            res.status(400).json({ errros: err.errors })
+            res.status(400).json({ errors: err.errors })
         }
     }
 
@@ -101,7 +101,7 @@ class UserController {
             res.status(202).send({message: "Password updated"})
         } catch(err){
             console.log(err);
-            res.status(400).json({ errros: err.error })
+            res.status(400).json({ errors: err.error })
         }
     }
 
@@ -112,7 +112,7 @@ class UserController {
             res.sendStatus(204)
         } catch(err){
             console.log(err);
-            res.status(400).json({ errros: err.errors })
+            res.status(400).json({ errors: err.errors })
         }
     }
 
@@ -144,7 +144,7 @@ class UserController {
         catch (err)
         {
             console.log(err);
-            res.status(400).json({ errros: err.error })
+            res.status(400).json({ errors: err.error })
         }
     }
 
