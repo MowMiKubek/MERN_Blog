@@ -53,9 +53,10 @@ class UserController {
 
     register = async (req, res) => {
         try{
+            console.log(req.body)
             if(req.body.passwordconfirm !== req.body.password)
-            {
-                throw {"passwordconfirm": {"error": "Hasła nie zgadzają się"}};
+            { 
+                throw {errors: {passwordconfirm: {message: "Hasła nie zgadzają się"}}}
             }
             const newUser = User(req.body);
             await newUser.save();

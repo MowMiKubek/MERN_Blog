@@ -40,7 +40,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    minlength: [3, "Hasło jest za krótkie (3-20 znaków)"],
+    minlength: [8, "Hasło jest za krótkie (3-20 znaków)"],
     maxlength: [72, "Hasło jest za długie (3-20 znaków)"]
   },
   firstname: {
@@ -102,9 +102,9 @@ userSchema.pre('save', function(next){
 });
 
 userSchema.post('save', function (err, doc, next)  {
-  if (err) {
-    console.log(err);
-  } 
+  // if (err) {
+  //   console.log(err);
+  // } 
   if (err.code === 11000) {
       let myError = {}
       if(err.keyValue?.login)

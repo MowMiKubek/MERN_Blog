@@ -1,21 +1,39 @@
 import { useState, useEffect } from "react"
 import axios from 'axios'
 
-const Register = (props) => {
-    const [gender, setGender] = useState('female')
+const EditProfile = (props) => {
+    const [gender, setGender] = useState('')
     const [email, setEmail] = useState('')
-    const [login, setLogin] = useState('')
     const [firstname, setFirstname] = useState('')
     const [surname, setSurname] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
     const [birthdate, setBirthdate] = useState('')
 
     const [errors, setErrors] = useState({})
-
-    const validate = () => {
-        
-    }
+    const token = localStorage.getItem("token")
+    useEffect(() => {
+        const config = {
+            method: 'get',
+            url: 'http://localhost:5000/users/',
+            headers: {'Content-Type': 'application/json', 'x-access-token': token}
+        }
+        axios(config)
+        .then(res => {
+            console.log(res.data)
+            const data = res.data
+            setGender(data.gender)
+            setEmail(data.email)
+            setFirstname(data.firstname)
+            setSurname(data.surname)
+            setBirthdate(data.birthdate.split('T')[0])
+        })
+        .catch(error => {
+            if (error.response && error.response.status >= 400 && error.response.status <= 500)
+            {
+                localStorage.removeItem("token")
+                window.location.reload()
+            }
+        })
+    },[])
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -27,25 +45,7 @@ const Register = (props) => {
           } else if (!/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i.test(email)) {
             errors.email = "Niepoprawny email";
           }
-          
-          if (!login) {
-            errors.login = "Login jest wymagany";
-          } else if (login.length < 3) {
-            errors.login = "Login musi zawierać co najmniej 3 znaki";
-          }
-          
-          if (!password) {
-            errors.password = "Hasło jest wymagane";
-          } else if (password.length < 8) {
-            errors.password = "Hasło musi zawierać co najmniej 8 znaków";
-          }
-          
-          if (!confirmPassword) {
-            errors.confirmPassword = "Potwierdzenie hasła jest wymagane";
-          } else if (confirmPassword !== password) {
-            errors.confirmPassword = "Potwierdzenie hasła nie zgadza się";
-          }
-          
+                    
           if (!firstname) {
             errors.firstname = "Imię jest wymagane";
           } else if (firstname.length < 3) {
@@ -70,18 +70,19 @@ const Register = (props) => {
         const userData = {
             gender,
             email,
-            login,
             firstname,
             surname,
-            password,
-            passwordconfirm: confirmPassword,
             birthdate
           };
-    
-          axios
-            .post("http://localhost:5000/users/", userData)
+          const config = {
+            method: 'put',
+            url: 'http://localhost:5000/users/',
+            data: userData,
+            headers: {'Content-Type': 'application/json', 'x-access-token': token}
+          }
+          axios(config)
             .then((response) => {
-              window.location = '/login'
+              window.location = '/profile'
             })
             .catch((error) => {
                 console.log(error.response)
@@ -92,10 +93,6 @@ const Register = (props) => {
                 ) {
                     const backendErrors = error.response.data.errors
                     const modifiedErrors = {};
-
-                    if (backendErrors.login && backendErrors.login.message) {
-                        modifiedErrors.login = backendErrors.login.message;
-                    }
 
                     if (backendErrors.email && backendErrors.email.message) {
                         modifiedErrors.email = backendErrors.email.message;
@@ -150,50 +147,6 @@ const Register = (props) => {
                         {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
                         </div>
                     </div>
-                    <div className="col-md-6 mb-3">
-                    <label htmlFor="login">Login</label>
-                    <input
-                        type="text"
-                        id="login"
-                        name="login"
-                        placeholder="Login"
-                        className={`form-control ${errors.login && 'is-invalid'}`}
-                        value={login}
-                        onChange={e => setLogin(e.target.value)}
-                        required
-                    />
-                    {errors.login && <div className='invalid-feedback'>{errors.login}</div>}
-                    </div>
-
-                    <div className="col-md-6 mb-3">
-                    <label htmlFor="password">Hasło</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Hasło"
-                        className={`form-control ${errors.password && 'is-invalid'}`}
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    />
-                    {errors.password && <div className='invalid-feedback'>{errors.password}</div>}
-                    </div>
-
-                    <div className="col-md-6 mb-3">
-                    <label htmlFor="passwordconfirm">Powtórz hasło</label>
-                    <input
-                        type="password"
-                        id="passwordconfirm"
-                        name="passwordconfirm"
-                        placeholder="Hasło"
-                        className={`form-control ${errors.confirmPassword && 'is-invalid'}`}
-                        value={confirmPassword}
-                        onChange={e => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                    {errors.confirmPassword && <div className='invalid-feedback'>{errors.confirmPassword}</div>}
-                    </div>
 
                     <div className="col-md-6 mb-3">
                     <label htmlFor="firstname">Imię</label>
@@ -238,10 +191,10 @@ const Register = (props) => {
                     />
                     {errors.birthdate && <div className='invalid-feedback'>{errors.birthdate}</div>}
                     </div>
-                    <button type="submit" className="btn btn-primary">Zarejestruj</button>
+                    <button type="submit" className="btn btn-primary">Aktualizuj</button>
                 </form>
         </div>
     )
 }
 
-export default Register
+export default EditProfile

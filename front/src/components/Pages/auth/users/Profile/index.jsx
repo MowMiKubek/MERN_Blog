@@ -48,7 +48,7 @@ const Profile = (props) => {
                     </h4>
                     <h4>Dane osobowe:</h4>
                     <b>Imię i nazwisko: {`${userData.firstname} ${userData.surname}`}</b><br />
-                    <b>Data urodzenia: {userData.birthday}</b> <br />
+                    <b>Data urodzenia: {userData.birthdate.split('T')[0]}</b> <br />
                     <b>Płeć: {userData.gender}</b>
                 </div>
 
