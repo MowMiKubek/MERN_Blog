@@ -1,7 +1,7 @@
 const Header = (props) => {
     return (
         <header className="masthead" 
-        style={{backgroundImage: "url('assets/img/rubiks-cube-home1.jpg')"}}
+        style={{backgroundImage: "url('/assets/img/rubiks-cube-home1.jpg')"}}
         >
             <div className="container position-relative px-4 px-lg-5">
                 <div className="row gx-4 gx-lg-5 justify-content-center">

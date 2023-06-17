@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 // router
 import postRouter from './routes/post.js';
 import userRouter from './routes/user.js';
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //encoders
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 // favicon
 app.use('/favicon.ico', express.static('assets/favicon.ico'));

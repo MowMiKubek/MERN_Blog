@@ -4,9 +4,14 @@ import Comment from "../database/models/comment.js";
 class PostController{
     getPostList = async (req, res) => {
         try {
-            const postData = await Post.find({}).populate('author', 'firstname surname')
-            console.log(postData)
-            res.json(postData)
+            const postData = await Post.find({}, 'title subtitle author').populate('author', 'firstname surname')
+            const modifiedData = postData.map(post => {
+                return {
+                    ...post._doc,
+                    date: post._id.getTimestamp().toISOString().split('T')[0]
+                };
+            });
+            res.json(modifiedData)
         } catch (err) {
             console.log(err);
             res.status(500).send({ message: "Coś poszło nie tak"})
@@ -27,6 +32,13 @@ class PostController{
                             path:  'author',
                             model: 'User' 
                         }
+                }).lean().exec()
+                postData.comments = postData.comments.map(comment => {
+                    const timestamp = comment._id.getTimestamp().toISOString().split('T')[0];
+                    return {
+                        ...comment,
+                        date: timestamp
+                    };
                 });
                 res.json(postData);
             } catch(err) {
