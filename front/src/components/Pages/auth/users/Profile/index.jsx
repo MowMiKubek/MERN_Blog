@@ -22,10 +22,31 @@ const deleteHandle = () => {
     })
 }
 
+const getRoleOptions = (role) => {
+    switch(role) {
+        case 'moderator':
+            return (
+                <>
+                <h4>Opcje dla twojej roli</h4>
+                <Link to="/createpost/">Dodaj post</Link>
+                </>
+            )
+        case 'admin':
+            return (
+                <>
+                <h4>Opcje dla twojej roli</h4>
+                <Link to="/createpost/">Dodaj post</Link>
+                <Link to="/adminpanel/">Panel administratora</Link>
+                </>
+            )
+        default:
+            return null
+    }
+}
+
 const Profile = (props) => {
     const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
     
     const token = localStorage.getItem('token')
     useEffect(() => {
@@ -40,11 +61,12 @@ const Profile = (props) => {
                 console.log(res.data)
                 setLoading(false)
             })
-            .catch(err => {
+            .catch(error => {
+                console.log(error)
                 if (error.response && error.response.status >= 400 && error.response.status <= 500)
                 {
                     localStorage.removeItem("token")
-                    window.location.reload()
+                    window.location = '/login'
                 }
             })
     },[])
@@ -71,6 +93,7 @@ const Profile = (props) => {
                 <Link to="/user/edit">Zmień dane osobowe</Link>
                 <Link to="/user/password">Zmień hasło</Link>
                 <a href="#" onClick={deleteHandle}>Usuń konto</a>
+                {getRoleOptions(userData.accountType)}
                 </>
             }
         </div>)

@@ -62,7 +62,7 @@ const Login = (props) => {
                 ? <div className='alert alert-danger mt-3'>{error}</div>
                 : null
             }
-            <h5 className="mt-3">Nie masz konta? <a href="/user/register">Zarejestruj się</a></h5>
+            <h5 className="mt-3">Nie masz konta? <a href="/register">Zarejestruj się</a></h5>
         </div>
     )
 }
