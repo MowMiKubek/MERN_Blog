@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 const logout = (e) => {
     e.preventDefault()
@@ -7,13 +8,27 @@ const logout = (e) => {
     window.location.reload()
 }
 
+const deleteHandle = () => {
+    const token = localStorage.getItem('token')
+    const config = {
+        method: 'delete',
+        url: 'http://localhost:5000/users/',
+        headers: {'Content-Type': 'application/json', 'x-access-token': token}
+    }
+    axios(config)
+    .finally(() => {
+        localStorage.removeItem("token")
+        window.location.reload()
+    })
+}
+
 const Profile = (props) => {
     const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-
+    
+    const token = localStorage.getItem('token')
     useEffect(() => {
-        const token = localStorage.getItem('token')
         const config = {
             url: 'http://localhost:5000/users',
             method: 'get',
@@ -53,9 +68,9 @@ const Profile = (props) => {
                 </div>
 
                 <a href="#" onClick={logout}>Wyloguj się</a>
-                <a href="/user/edit">Zmień dane osobowe</a>
-                <a href="/user/password">Zmień hasło</a>
-                <a href="/user/delete">Usuń konto</a>
+                <Link to="/user/edit">Zmień dane osobowe</Link>
+                <Link to="/user/password">Zmień hasło</Link>
+                <a href="#" onClick={deleteHandle}>Usuń konto</a>
                 </>
             }
         </div>)

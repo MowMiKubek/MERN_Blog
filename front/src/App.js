@@ -42,6 +42,7 @@ function App() {
         <ProtectedRoute user={user}/>}>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/user/edit" element={<EditUser />}/>
+          <Route path="/user/password" element={<Password />}/>
           <Route path="/password" element={<Password />}/>
           <Route path="/adminpanel" element={<AdminPanel/>}/>
         </Route>
