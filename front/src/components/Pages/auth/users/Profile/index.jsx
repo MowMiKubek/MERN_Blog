@@ -8,20 +8,6 @@ const logout = (e) => {
     window.location.reload()
 }
 
-const deleteHandle = () => {
-    const token = localStorage.getItem('token')
-    const config = {
-        method: 'delete',
-        url: 'http://localhost:5000/users/',
-        headers: {'Content-Type': 'application/json', 'x-access-token': token}
-    }
-    axios(config)
-    .finally(() => {
-        localStorage.removeItem("token")
-        window.location.reload()
-    })
-}
-
 const getRoleOptions = (role) => {
     switch(role) {
         case 'moderator':
@@ -84,15 +70,16 @@ const Profile = (props) => {
                         Ranga konta: {userData.accountType}
                     </h4>
                     <h4>Dane osobowe:</h4>
-                    <b>Imię i nazwisko: {`${userData.firstname} ${userData.surname}`}</b><br />
-                    <b>Data urodzenia: {userData.birthdate.split('T')[0]}</b> <br />
-                    <b>Płeć: {userData.gender}</b>
+                    <b>Imię i nazwisko:</b> {`${userData.firstname} ${userData.surname}`}<br />
+                    <b>Email:</b> {`${userData.email}`}<br />
+                    <b>Data urodzenia:</b> {userData.birthdate.split('T')[0]} <br />
+                    <b>Płeć: </b>{userData.gender}
                 </div>
 
                 <a href="#" onClick={logout}>Wyloguj się</a>
                 <Link to="/user/edit">Zmień dane osobowe</Link>
                 <Link to="/user/password">Zmień hasło</Link>
-                <a href="#" onClick={deleteHandle}>Usuń konto</a>
+                <Link to="/user/delete">Usuń konto</Link>
                 {getRoleOptions(userData.accountType)}
                 </>
             }

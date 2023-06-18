@@ -107,13 +107,21 @@ class UserController {
     }
 
     delete = async (req, res) => {
-        const _id = req.user._id
+        const {_id} = req.user
+        const {password} = req.body
         try{
-            await User.findByIdAndDelete(_id);
-            res.sendStatus(204)
+            const user = await User.findById(_id);
+            if(user && user.comparePassword(password)){
+                await User.findByIdAndDelete(_id)
+                res.sendStatus(204)
+            } else {
+                // res.status(403).json( {errors: {password: {message: "Hasło nie jest poprawne" }}})
+                res.sendStatus(403)
+            }
         } catch(err){
             console.log(err);
-            res.status(400).json({ errors: err.errors })
+            // res.status(403).json({ errors: err.errors })
+            res.sendStatus(403)
         }
     }
 

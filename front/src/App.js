@@ -14,6 +14,7 @@ import Password from './components/Pages/auth/users/Password'
 import AdminPanel from "./components/Pages/auth/users/AdminPanel"
 import EditUser from './components/Pages/auth/users/EditUser'
 import CreatePosts from "./components/Pages/auth/posts/CreatePosts"
+import Delete from "./components/Pages/auth/users/Delete"
 
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/profile" element={<Profile />}/>
           <Route path="/user/edit" element={<EditUser />}/>
           <Route path="/user/password" element={<Password />}/>
+          <Route path="/user/delete" element={<Delete />}/>
           <Route path="/password" element={<Password />}/>
 
           <Route path="/createpost" element={<CreatePosts/>}/>
