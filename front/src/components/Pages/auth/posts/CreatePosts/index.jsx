@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import axios from 'axios'
 const CreatePosts = (props) => {
     
@@ -66,6 +66,27 @@ const CreatePosts = (props) => {
         window.location = '/'
         return
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        const forbiddenRoles = ['manager', 'admin']
+        const config = {
+            url: 'http://localhost:5000/users',
+            method: 'get',
+            headers: {'Content-Type': 'application/json', 'x-access-token': token}
+        }
+        axios(config)
+            .then(res => {
+                const data = res.data
+                if(!forbiddenRoles.includes(data.accountType)) {
+                    window.location = "/profile"
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                window.location  = "/profile"
+            })
+    },[])
 
     return (
     <div>

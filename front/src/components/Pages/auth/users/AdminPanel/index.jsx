@@ -1,39 +1,18 @@
-const users = [
-    {
-        id: 1,
-        firstname: 'Jakub',
-        lastname: 'Tkaczyk',
-        email: 'jtkaczyk@gmail.com',
-        accountType: 'admin',
-    },
-    {
-        id: 2,
-        firstname: 'Maciej',
-        lastname: 'Jebiewdenko',
-        email: 'mjebie@gmail.com',
-        accountType: 'moderator',
-    },
-    {
-        id: 3,
-        firstname: 'Julia',
-        lastname: 'Kowalska',
-        email: 'jkowalska@gmail.com',
-        accountType: 'user',
-    },
-]
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
-const getUserTable = (users) => {
+const getUserTable = (users, callback) => {
     const result = users.map(user => (
-        <tr key={user.id}>
+        <tr key={user._id}>
             <td>{user.firstname}</td>
             <td>{user.surname}</td>
             <td>{user.email}</td>
             <td>{user.accountType}</td>
             <td>
-                <div class="btn-group">
-                    <a href="/user/roleuser/<%= user._id %>" type="button" class="btn btn-primary btn-sm">{ user.accountType === "user" ? "Ban" : "User"}</a>
-                    <a href="/user/rolemoder/<%= user._id %>" type="button" class="btn btn-secondary btn-sm">Moder</a>
-                    <a href="/user/roleadmin/<%= user._id %>" type="button" class="btn btn-success btn-sm">Admin</a>
+                <div className="btn-group">
+                    <a href="#" onClick={() => callback(user._id, user.accountType === "user" ? "inactive" : "user")} type="button" className="btn btn-primary btn-sm">{ user.accountType === "user" ? "Ban" : "User"}</a>
+                    <a href="#" onClick={() => callback(user._id, "moderator")} type="button" className="btn btn-secondary btn-sm">Moder</a>
+                    <a href="#" onClick={() => callback(user._id, "admin")} type="button" className="btn btn-success btn-sm">Admin</a>
                 </div>
             </td>
         </tr>
@@ -41,23 +20,96 @@ const getUserTable = (users) => {
     return result
 }
 
+
+
 const AdminPanel = (props) => {
+    const [userList, setUserList] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const changeUserRole = async (userID, newRole) => {
+        try {
+            setLoading(true)
+            const token = localStorage.getItem("token")
+            const config = {
+                url: 'http://localhost:5000/users/adminpanel/',
+                method: "post",
+                data: { userID: userID, newRole: newRole },
+                headers: { "Content-Type": "application/json", "x-access-token": token}
+            }
+            await axios(config)
+            await fetchUserList()
+            setLoading(true)
+        } catch(error) {
+            if(error.response){
+                const code = error.response.status
+                if(code === 401){ // invalid token
+                    localStorage.removeItem("token")
+                    window.location = '/login'
+                }
+                if(code ===  403){ // wrong role
+                    window.location = '/profile'
+                } else {
+                    console.log(error.response)
+                    window.location = '/'
+                }
+            }
+        }
+    }
+
+    const fetchUserList = async () => {
+        const token = localStorage.getItem("token")
+        const config = {
+            url: 'http://localhost:5000/users/all/',
+            method: "get",
+            headers: { "Content-Type": "application/json", "x-access-token": token}
+        }
+        try {
+            const result = await axios(config)
+            const data = result.data
+            console.log(data)
+            setUserList(data)
+            setLoading(true)
+        } catch(error) {
+            if(error.response){
+                const code = error.response.status
+                if(code === 401){ // invalid token
+                    localStorage.removeItem("token")
+                    window.location = '/login'
+                }
+                if(code ===  403){ // wrong role
+                    window.location = '/profile'
+                } else {
+                    console.log(error.response)
+                    window.location = '/'
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        fetchUserList()
+        console.log(userList)
+    },[])
     return (
         <div>
-            <table class="table table-striped">
-                    <thead>
-                        <tr>
-                          <th scope="col">Imie</th>
-                          <th scope="col">Nazwisko</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Rola</th>
-                          <th scope="col">Akcja</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {getUserTable(users)}
-                    </tbody>
+            {
+                loading
+                ?<table className="table table-striped">
+                <thead>
+                    <tr>
+                      <th scope="col">Imie</th>
+                      <th scope="col">Nazwisko</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Rola</th>
+                      <th scope="col">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { getUserTable(userList, changeUserRole) }
+                </tbody>
                 </table>
+                : <p>Loading...</p>
+            }
         </div>
     )
 }

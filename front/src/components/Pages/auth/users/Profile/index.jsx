@@ -79,7 +79,7 @@ const Profile = (props) => {
                 : 
                 <>
                 <h3>Dzień dobry {userData.login}</h3>
-                <div class="mt-3">
+                <div className="mt-3">
                     <h4>
                         Ranga konta: {userData.accountType}
                     </h4>
