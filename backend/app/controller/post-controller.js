@@ -72,6 +72,59 @@ class PostController{
         }
     }
 
+    deletePost = async (req, res) => {
+        const { _id, accountType } = req.user
+        const {postID} = req.body
+        if(!postID) {
+            res.sendStatus(400)
+            return
+        }
+        if(accountType !== 'admin'){
+            res.sendStatus(403)
+            return
+        }
+        try{
+            const postToDelete = await Post.findById(postID)
+            if(postToDelete) {
+                const comments = postToDelete.comments
+                await Post.findByIdAndDelete(postID)
+                await Comment.deleteMany({ _id: { $in: comments }})
+                res.sendStatus(204)
+            } else {
+                res.sendStatus(404)
+            }
+        } catch (error) {
+            console.log(error)
+            res.sendStatus(500)
+        }
+    }
+
+    updatePost = async (req, res) => {
+        const { _id, accountType } = req.user
+        const {postID, title, subtitle, content } = req.body
+        if(!postID){
+            res.sendStatus(400)
+            return
+        }
+        if(accountType !== 'admin'){
+            res.sendStatus(403)
+            return
+        }
+        try {
+            const postToUpdate = await Post.findById(postID)
+            if(postToUpdate) {
+                postToUpdate.title = title
+                postToUpdate.subtitle = subtitle
+                postToUpdate.content = content
+                await postToUpdate.save()
+                res.sendStatus(204)
+            }
+        }catch(err){
+            console.log(err);
+            res.status(400).send({ error: "Nie udało się edytować postu"})
+        }
+    }
+
     addComment = async (req, res) => {
         console.log('komentarz')
         // walidacja tokena

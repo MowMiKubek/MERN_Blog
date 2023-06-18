@@ -9,7 +9,7 @@ router.get('/', postController.getPostList);
 router.post('/comment', tokenVerification, postController.addComment)
 router.get('/:postID', postController.getPost);
 router.post('/', tokenVerification, sanitizer, postController.createPost);
-// router.put('/', sanitizer, postController.editPost);
-// router.delete('/', postController.delete)
+router.delete('/', tokenVerification, postController.deletePost);
+router.put('/', tokenVerification, postController.updatePost);
 
 export default router;
