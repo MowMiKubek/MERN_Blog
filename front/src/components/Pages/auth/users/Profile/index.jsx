@@ -30,15 +30,14 @@ const getRoleOptions = (role) => {
     }
 }
 
-const getRankName = (rank) => {
-    switch(rank) {
-        case 'moderator':
-            return <span style={{color: 'purple'}}>Nadworny moderator</span>
+const getRoleName = (role) => {
+    switch(role) {
         case 'admin':
             return <span style={{color: 'rgb(165, 50, 50)'}}>Jaśnie nam panujący admin</span>
+        case 'moderator':
+            return <span style={{color: 'purple'}}>Nadworny moderator</span>
         default:
-            return 'User'
-
+            return "User"
     }
 }
 
@@ -69,8 +68,6 @@ const Profile = (props) => {
             })
     },[])
 
-
-
     return (
         <div>
             {
@@ -81,13 +78,13 @@ const Profile = (props) => {
                 <h3>Dzień dobry {`${userData.firstname} ${userData.surname}`}</h3>
                 <div className="mt-3">
                     <h4>
-                        Ranga konta: {getRankName(userData.accountType)}
+                        Ranga konta: {getRoleName(userData.accountType)}
                     </h4>
                     <h4>Dane osobowe:</h4>
                     <b>Login:</b> {userData.login}<br />
                     <b>Email:</b> {`${userData.email}`}<br />
                     <b>Data urodzenia:</b> {userData.birthdate.split('T')[0]} <br />
-                    <b>Płeć: </b>{userData.gender === 'male' ? "Mężczyzna" : "Kobieta"}
+                    <b>Płeć: </b>{userData.gender === 'male' ? 'mężczyzna' : 'kobieta'}
                 </div>
 
                 <a href="#" onClick={logout}>Wyloguj się</a>

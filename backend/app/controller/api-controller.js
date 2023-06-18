@@ -7,7 +7,7 @@ class APIController {
         const {token} = config;
         const responce = await axios.get(url, {
             params: {
-                Authorization: "Bearer " + 'IWilda6S5GMZemr2iKdmaSlEqZzgIAkthMFLkz3iUp0'
+                Authorization: "Bearer " + token
             }
         });
         //console.log(responce);
