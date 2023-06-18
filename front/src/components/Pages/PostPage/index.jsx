@@ -16,7 +16,6 @@ const PostPage = (props) => {
     const { postid } = useParams()
     const [postData, setPostData] = useState({})
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
 
     useEffect(() => {
         axios.get(`http://localhost:5000/posts/${postid}`)
@@ -25,7 +24,10 @@ const PostPage = (props) => {
                 console.log(res.data)
                 setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                window.location = '/'
+            })
     },[])
 
     // const postContent = getPost(postid)

@@ -23,6 +23,7 @@ const getRoleOptions = (role) => {
                 <h4>Opcje dla twojej roli</h4>
                 <Link className="mx-1" to="/createpost/">Dodaj post</Link>
                 <Link className="mx-1" to="/adminpanel/">Panel administratora</Link>
+                <Link className="mx-1" to="/adminposts/">Zarządzanie postami</Link>
                 </>
             )
         default:

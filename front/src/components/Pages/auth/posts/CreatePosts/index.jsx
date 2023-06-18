@@ -69,7 +69,7 @@ const CreatePosts = (props) => {
 
     useEffect(() => {
         const token = localStorage.getItem("token")
-        const forbiddenRoles = ['manager', 'admin']
+        const forbiddenRoles = ['moderator', 'admin']
         const config = {
             url: 'http://localhost:5000/users',
             method: 'get',

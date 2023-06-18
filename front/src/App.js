@@ -13,6 +13,7 @@ import AdminPanel from "./components/Pages/auth/users/AdminPanel"
 import EditUser from './components/Pages/auth/users/EditUser'
 import CreatePosts from "./components/Pages/auth/posts/CreatePosts"
 import Delete from "./components/Pages/auth/users/Delete"
+import AdminPosts from './components/Pages/auth/posts/AdminPosts'
 
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 
@@ -46,6 +47,7 @@ function App() {
 
           <Route path="/createpost" element={<CreatePosts/>}/>
           <Route path="/adminpanel" element={<AdminPanel/>}/>
+          <Route path="/adminposts" element={<AdminPosts/>}/>
         </Route>
         {/* End Auth components */}
       </Route>
