@@ -38,7 +38,8 @@ const PostPage = (props) => {
                     <h2 className="section-heading">{postData.title}</h2>
                     <div dangerouslySetInnerHTML={{__html: postData.content}}/>
                     <Comments 
-                    comments={postData.comments} />
+                    comments={postData.comments} 
+                    postID={postData._id}/>
                 </>
             }
         </div>
