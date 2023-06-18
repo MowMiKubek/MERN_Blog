@@ -6,6 +6,7 @@ import tokenVerification from '../middleware/tokenVerification.js';
 const router = Router();
 
 router.get('/', postController.getPostList);
+router.post('/comment', tokenVerification, postController.addComment)
 router.get('/:postID', postController.getPost);
 router.post('/', tokenVerification, sanitizer, postController.createPost);
 // router.put('/', sanitizer, postController.editPost);

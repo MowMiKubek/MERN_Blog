@@ -73,16 +73,16 @@ class PostController{
     }
 
     addComment = async (req, res) => {
+        console.log('komentarz')
         // walidacja tokena
-        const {postID} = req.params;
+        const {postID, content} = req.body;
         if(postID === undefined || postID === null)
         {
             return res.status(400).json({error: "PostID jest wymagane"});
         }
-        console.log(req.session.user);
         const newComment = Comment({
             content: req.body.content,
-            author: req.session.user._id
+            author: req.user._id
         });
         try {
             const post = await Post.findById(postID);
