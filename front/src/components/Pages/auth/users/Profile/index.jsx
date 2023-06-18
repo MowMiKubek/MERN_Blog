@@ -14,19 +14,31 @@ const getRoleOptions = (role) => {
             return (
                 <>
                 <h4>Opcje dla twojej roli</h4>
-                <Link to="/createpost/">Dodaj post</Link>
+                <Link className="mx-1" to="/createpost/">Dodaj post</Link>
                 </>
             )
         case 'admin':
             return (
                 <>
                 <h4>Opcje dla twojej roli</h4>
-                <Link to="/createpost/">Dodaj post</Link>
-                <Link to="/adminpanel/">Panel administratora</Link>
+                <Link className="mx-1" to="/createpost/">Dodaj post</Link>
+                <Link className="mx-1" to="/adminpanel/">Panel administratora</Link>
                 </>
             )
         default:
             return null
+    }
+}
+
+const getRankName = (rank) => {
+    switch(rank) {
+        case 'moderator':
+            return <span style={{color: 'purple'}}>Nadworny moderator</span>
+        case 'admin':
+            return <span style={{color: 'rgb(165, 50, 50)'}}>Jaśnie nam panujący admin</span>
+        default:
+            return 'User'
+
     }
 }
 
@@ -57,6 +69,8 @@ const Profile = (props) => {
             })
     },[])
 
+
+
     return (
         <div>
             {
@@ -64,22 +78,22 @@ const Profile = (props) => {
                 ? <p>Loading...</p>
                 : 
                 <>
-                <h3>Dzień dobry {userData.login}</h3>
+                <h3>Dzień dobry {`${userData.firstname} ${userData.surname}`}</h3>
                 <div className="mt-3">
                     <h4>
-                        Ranga konta: {userData.accountType}
+                        Ranga konta: {getRankName(userData.accountType)}
                     </h4>
                     <h4>Dane osobowe:</h4>
-                    <b>Imię i nazwisko:</b> {`${userData.firstname} ${userData.surname}`}<br />
+                    <b>Login:</b> {userData.login}<br />
                     <b>Email:</b> {`${userData.email}`}<br />
                     <b>Data urodzenia:</b> {userData.birthdate.split('T')[0]} <br />
-                    <b>Płeć: </b>{userData.gender}
+                    <b>Płeć: </b>{userData.gender === 'male' ? "Mężczyzna" : "Kobieta"}
                 </div>
 
                 <a href="#" onClick={logout}>Wyloguj się</a>
-                <Link to="/user/edit">Zmień dane osobowe</Link>
-                <Link to="/user/password">Zmień hasło</Link>
-                <Link to="/user/delete">Usuń konto</Link>
+                <Link className="mx-1" to="/user/edit">Zmień dane osobowe</Link>
+                <Link className="mx-1" to="/user/password">Zmień hasło</Link>
+                <Link className="mx-1" to="/user/delete">Usuń konto</Link>
                 {getRoleOptions(userData.accountType)}
                 </>
             }
