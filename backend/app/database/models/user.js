@@ -83,10 +83,10 @@ const userSchema = new Schema({
     required: true,
     default: "inactive"
   },
-  apiToken: {
-    type: String,
-    default: ""
-  }
+  // apiToken: {
+  //   type: String,
+  //   default: ""
+  // }
 }, {Collection: "Users"});
 
 userSchema.virtual('fullname').get(function() {

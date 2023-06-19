@@ -92,9 +92,10 @@ const AdminPosts = (props) => {
         }
         axios(config)
             .then(res => {
+                const roles = ['admin', 'moderator']
                 const data = res.data
                 console.log(data)
-                if(data.accountType !== 'admin'){
+                if(!roles.includes(data.accountType)){
                     window.location = '/profile'
                     return
                 } else {

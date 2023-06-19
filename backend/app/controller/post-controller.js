@@ -4,7 +4,9 @@ import Comment from "../database/models/comment.js";
 class PostController{
     getPostList = async (req, res) => {
         try {
-            const postData = await Post.find({}, 'title subtitle author').populate('author', 'firstname surname')
+            const postData = await Post.find({}, 'title subtitle author')
+                .populate('author', 'firstname surname')
+                .sort({ _id: -1 })
             const modifiedData = postData.map(post => {
                 return {
                     ...post._doc,
@@ -75,11 +77,12 @@ class PostController{
     deletePost = async (req, res) => {
         const { _id, accountType } = req.user
         const {postID} = req.body
+        const roles = ['admin', 'moderator']
         if(!postID) {
             res.sendStatus(400)
             return
         }
-        if(accountType !== 'admin'){
+        if(!roles.includes(accountType)){
             res.sendStatus(403)
             return
         }
