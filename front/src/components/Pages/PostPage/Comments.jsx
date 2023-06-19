@@ -47,7 +47,7 @@ const Comments = ({ comments, postID }) => {
         })
     }
     return (
-        <div>
+        <div className='mt-5'>
         <h2>Sekcja komentarzy</h2>
         <form onSubmit={handleSubmit} class="mb-3">
             <textarea ref={contentRef} id="content" cols="60" rows="10" placeholder="Aby dodać komentarz musisz być zalogowany"></textarea>

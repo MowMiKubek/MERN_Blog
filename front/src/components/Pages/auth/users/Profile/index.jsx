@@ -65,6 +65,8 @@ const Profile = (props) => {
                 {
                     localStorage.removeItem("token")
                     window.location = '/login'
+                } else {
+                    window.location = '/'
                 }
             })
     },[])

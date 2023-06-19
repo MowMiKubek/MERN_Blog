@@ -7,7 +7,7 @@ const CreatePosts = (props) => {
     const contentRef = useRef();
 
     const [errors, setErrors] = useState({});
-
+    const [loading, setLoading] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
@@ -80,7 +80,8 @@ const CreatePosts = (props) => {
                 const data = res.data
                 if(!forbiddenRoles.includes(data.accountType)) {
                     window.location = "/profile"
-                }
+                } else
+                    setLoading(false)
             })
             .catch(error => {
                 console.log(error)
@@ -89,7 +90,11 @@ const CreatePosts = (props) => {
     },[])
 
     return (
-    <div>
+        <div>
+    {
+        loading
+        ? <p>Loading...</p>
+        :<>
         <h3>Logowanie</h3>
         <form onSubmit={handleSubmit}>
             <div className="col-md-6 mb-3">
@@ -135,6 +140,8 @@ const CreatePosts = (props) => {
                 Wyślij
             </button>
         </form>
+        </>
+    }
     </div>
     );
 };

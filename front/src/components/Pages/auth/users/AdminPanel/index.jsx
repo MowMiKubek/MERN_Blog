@@ -38,7 +38,7 @@ const AdminPanel = (props) => {
             }
             await axios(config)
             await fetchUserList()
-            setLoading(true)
+            setLoading(false)
         } catch(error) {
             if(error.response){
                 const code = error.response.status
@@ -64,11 +64,12 @@ const AdminPanel = (props) => {
             headers: { "Content-Type": "application/json", "x-access-token": token}
         }
         try {
+            setLoading(true)
             const result = await axios(config)
             const data = result.data
             console.log(data)
             setUserList(data)
-            setLoading(true)
+            setLoading(false)
         } catch(error) {
             if(error.response){
                 const code = error.response.status
@@ -94,7 +95,8 @@ const AdminPanel = (props) => {
         <div>
             {
                 loading
-                ?<table className="table table-striped">
+                ? <p>Loading...</p>
+                :<table className="table table-striped">
                 <thead>
                     <tr>
                       <th scope="col">Imie</th>
@@ -108,7 +110,6 @@ const AdminPanel = (props) => {
                     { getUserTable(userList, changeUserRole) }
                 </tbody>
                 </table>
-                : <p>Loading...</p>
             }
         </div>
     )

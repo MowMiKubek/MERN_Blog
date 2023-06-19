@@ -32,7 +32,6 @@ function App() {
       <Route element={<MainLayout />}>
         <Route index path="/" element={<HomePage />}/>
         <Route path="/about" element={<AboutPage />}/>
-        <Route path="/about" element={<AboutPage />}/>
         <Route path="/posts/:postid" element={<PostPage />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
@@ -43,7 +42,7 @@ function App() {
           <Route path="/user/edit" element={<EditUser />}/>
           <Route path="/user/password" element={<Password />}/>
           <Route path="/user/delete" element={<Delete />}/>
-          <Route path="/password" element={<Password />}/>
+          {/* <Route path="/password" element={<Password />}/> */}
 
           <Route path="/createpost" element={<CreatePosts/>}/>
           <Route path="/adminpanel" element={<AdminPanel/>}/>

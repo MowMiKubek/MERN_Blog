@@ -11,8 +11,29 @@ var e_names = {
     "skewb": "Skewb", 
     "clock": "Clock", 
     "minx": "Megaminx",
-    "333bf": "3x3x3 bez patrzenia"}
-	
+    "333bf": "3x3x3 bez patrzenia"
+}
+function getStringTime(time){
+    if(!time)
+        return ''
+	var sekundy = Math.floor(time/100);
+	var minuty = 0;
+	while(sekundy>=60)
+	{
+		sekundy -= 60;
+		minuty++;
+	}
+	var result = "";
+	if(minuty>0)
+		result += minuty.toString() + ":";
+	if(minuty>0 && sekundy<10)
+		result += "0";
+	result += sekundy.toString() + '.';
+	if(time%100<10)
+		result += "0";
+	result += time%100;
+	return result;
+}	
 
 const getTable = data => {
     const keys = Object.keys(data)
@@ -38,8 +59,8 @@ const getTable = data => {
                         <td>{data[key].single.country_rank}</td>
                         <td>{data[key].single.continent_rank}</td>
                         <td>{data[key].single.world_rank}</td>
-                        <td>{data[key].single.best}</td>
-                        <td>{data[key].average?.best}</td>
+                        <td>{getStringTime(data[key].single.best)}</td>
+                        <td>{getStringTime(data[key].average?.best)}</td>
                         <td>{data[key].average?.world_rank}</td>
                         <td>{data[key].average?.continent_rank}</td>
                         <td>{data[key].average?.country_rank}</td>

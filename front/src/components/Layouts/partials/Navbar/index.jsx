@@ -19,8 +19,7 @@ const Navbar = (props) => {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ms-auto py-4 py-lg-0">
                         <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/">Główna</NavLink></li>
-                        <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/about">O mnie</NavLink></li>
-                        <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/contact">Kontakt</NavLink></li>
+                        <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/about">O autorze</NavLink></li>
                         {token 
                         ? <>
                             <li className="nav-item"><NavLink className="nav-link px-lg-3 py-3 py-lg-4" to="/profile">Profil</NavLink></li>
